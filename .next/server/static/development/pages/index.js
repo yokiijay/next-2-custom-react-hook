@@ -106,23 +106,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-function useInput(initialValue) {
+function useInput(ref, initialValue = '') {
   const {
     0: value,
     1: setValue
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialValue);
-
-  function reset(newValue) {
-    setValue(newValue || initialValue);
-  }
-
-  const bind = {
-    value,
-    onChange: e => {
-      setValue(e.target.value);
-    }
-  };
-  return [value, bind, reset];
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    ref.current.oninput = ev => {
+      setValue(ev.target.value);
+    };
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    ref.current.value = value;
+  });
+  return [value, setValue];
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (useInput);
@@ -145,70 +142,76 @@ var _jsxFileName = "/Users/yokiijay/Desktop/next-2-custom-react-hook/pages/index
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-
 
 
 const Index = () => {
-  const [username, bindUsername, resetUsername] = Object(_libs_useInput__WEBPACK_IMPORTED_MODULE_1__["default"])('');
-  const [hobby, bindHobby, resetHobby] = Object(_libs_useInput__WEBPACK_IMPORTED_MODULE_1__["default"])('');
+  const usernameRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  const hobbyRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  const [username, setUsername] = Object(_libs_useInput__WEBPACK_IMPORTED_MODULE_1__["default"])(usernameRef);
+  const [hobby, setHobby] = Object(_libs_useInput__WEBPACK_IMPORTED_MODULE_1__["default"])(hobbyRef);
 
-  function handleSubmit(ev) {
-    ev.preventDefault();
-    alert(`The username is ${username}, his hobby is ${hobby}`);
-    resetUsername();
-    resetHobby();
-  }
+  const handleSubmit = () => {};
 
   return __jsx("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 14
     },
     __self: undefined
   }, __jsx("form", {
     onSubmit: handleSubmit,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 18
+      lineNumber: 15
     },
     __self: undefined
-  }, "username:", __jsx("input", _extends({
-    type: "text"
-  }, bindUsername, {
+  }, "username:", __jsx("input", {
+    type: "text",
+    ref: usernameRef,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 17
+    },
+    __self: undefined
+  }), " ", __jsx("br", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 17
+    },
+    __self: undefined
+  }), "hobby:", __jsx("input", {
+    type: "text",
+    ref: hobbyRef,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 19
     },
     __self: undefined
-  })), " ", __jsx("br", {
+  }), " ", __jsx("br", {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 19
-    },
-    __self: undefined
-  }), "hobby:", __jsx("input", _extends({
-    type: "text"
-  }, bindHobby, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 20
-    },
-    __self: undefined
-  })), " ", __jsx("br", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 20
     },
     __self: undefined
   }), __jsx("button", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 21
+      lineNumber: 20
     },
     __self: undefined
-  }, "Submit")));
+  }, "Submit")), __jsx("h5", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 22
+    },
+    __self: undefined
+  }, username), __jsx("h5", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 23
+    },
+    __self: undefined
+  }, hobby));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Index);

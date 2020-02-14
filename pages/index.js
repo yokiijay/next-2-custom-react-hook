@@ -1,25 +1,26 @@
-import { useState } from "react"
-import useInput from "../libs/useInput"
-
+import { useState, useRef } from 'react'
+import useInput from '../libs/useInput'
 
 const Index = () => {
-  const [username, bindUsername, resetUsername] = useInput('')
-  const [hobby, bindHobby, resetHobby] = useInput('')
+  const usernameRef = useRef(null)
+  const hobbyRef = useRef(null)
 
-  function handleSubmit(ev){
-    ev.preventDefault()
-    alert(`The username is ${username}, his hobby is ${hobby}`)
-    resetUsername()
-    resetHobby()
-  }
+  const [username, setUsername] = useInput(usernameRef)
+  const [hobby, setHobby] = useInput(hobbyRef)
 
-  return(
+  const handleSubmit = () => {}
+
+  return (
     <div>
       <form onSubmit={handleSubmit}>
-        username:<input type="text" {...bindUsername} /> <br/>
-        hobby:<input type="text" {...bindHobby} /> <br/>
+        username:
+        <input type='text' ref={usernameRef} /> <br />
+        hobby:
+        <input type='text' ref={hobbyRef} /> <br />
         <button>Submit</button>
       </form>
+      <h5>{username}</h5>
+      <h5>{hobby}</h5>
     </div>
   )
 }

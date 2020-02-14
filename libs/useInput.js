@@ -1,21 +1,19 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from 'react'
 
-function useInput(initialValue){
+function useInput(ref,initialValue = '') {
   const [value, setValue] = useState(initialValue)
-  
-  function reset(newValue){
-    setValue(newValue || initialValue)
-  }
 
-  const bind = {
-    value,
-    onChange: e=>{
-      setValue(e.target.value)
+  useEffect(()=>{
+    ref.current.oninput = ev => {
+      setValue(ev.target.value)
     }
-  }
+  }, [])
 
-  return [value, bind, reset]
-  
+  useEffect(()=>{
+    ref.current.value = value
+  })
+
+  return [value, setValue]
 }
 
 export default useInput
